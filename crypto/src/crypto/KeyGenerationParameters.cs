@@ -8,7 +8,7 @@ namespace Org.BouncyCastle.Crypto
      */
     public class KeyGenerationParameters
     {
-        private SecureRandom	random;
+        internal SecureRandom	random;
         private int				strength;
 
         /**
@@ -40,6 +40,7 @@ namespace Org.BouncyCastle.Crypto
         public SecureRandom Random
         {
             get { return random; }
+            internal set { random = value; }
         }
 
 		/**

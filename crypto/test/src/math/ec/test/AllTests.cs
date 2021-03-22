@@ -13,7 +13,7 @@ namespace Org.BouncyCastle.Math.EC.Tests
             Suite.Run(new NullListener(), NUnit.Core.TestFilter.Empty);
         }
 
-        [Suite]
+        //[Suite]
         public static TestSuite Suite
         {
             get

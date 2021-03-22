@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\NUnit.3.13.1\build\NUnit.props" Condition="Exists('..\..\packages\NUnit.3.13.1\build\NUnit.props')" />
+  <Import Project="..\..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,7 +11,10 @@
     <OutputType>Library</OutputType>
     <RootNamespace>UnitTests</RootNamespace>
     <AssemblyName>UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +26,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <NoWarn>219</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -31,12 +37,13 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <NoWarn>219</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <HintPath>lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.13.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.13.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="nunit.core.interfaces">
       <HintPath>lib\nunit.core.interfaces.dll</HintPath>
     </Reference>
@@ -1345,4 +1352,69 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\pqc\crypto\lms\AllTests.java" />
+    <Content Include="src\pqc\crypto\lms\HSSTests.java" />
+    <Content Include="src\pqc\crypto\lms\LMSKeyGenTests.java" />
+    <Content Include="src\pqc\crypto\lms\LMSTests.java" />
+    <Content Include="src\pqc\crypto\lms\LMSVectorUtils.java" />
+    <Content Include="src\pqc\crypto\lms\TypeTests.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTeslaKeyEncodingTests.java" />
+    <Content Include="src\pqc\crypto\test\AllTests.java" />
+    <Content Include="src\pqc\crypto\test\BitStringTest.java" />
+    <Content Include="src\pqc\crypto\test\EncryptionKeyTest.java" />
+    <Content Include="src\pqc\crypto\test\GMSSSignerTest.java" />
+    <Content Include="src\pqc\crypto\test\HSSTest.java" />
+    <Content Include="src\pqc\crypto\test\LMSTest.java" />
+    <Content Include="src\pqc\crypto\test\McElieceCipherTest.java" />
+    <Content Include="src\pqc\crypto\test\McElieceFujisakiCipherTest.java" />
+    <Content Include="src\pqc\crypto\test\McElieceKobaraImaiCipherTest.java" />
+    <Content Include="src\pqc\crypto\test\McEliecePointchevalCipherTest.java" />
+    <Content Include="src\pqc\crypto\test\NewHopeTest.java" />
+    <Content Include="src\pqc\crypto\test\NTRUEncryptionParametersTest.java" />
+    <Content Include="src\pqc\crypto\test\NTRUEncryptTest.java" />
+    <Content Include="src\pqc\crypto\test\NTRUSignatureKeyTest.java" />
+    <Content Include="src\pqc\crypto\test\NTRUSignatureParametersTest.java" />
+    <Content Include="src\pqc\crypto\test\NTRUSignerTest.java" />
+    <Content Include="src\pqc\crypto\test\NTRUSigningParametersTest.java" />
+    <Content Include="src\pqc\crypto\test\NullPRNG.java" />
+    <Content Include="src\pqc\crypto\test\QTESLASecureRandomFactory.java" />
+    <Content Include="src\pqc\crypto\test\QTESLATest.java" />
+    <Content Include="src\pqc\crypto\test\RainbowSignerTest.java" />
+    <Content Include="src\pqc\crypto\test\RegressionTest.java" />
+    <Content Include="src\pqc\crypto\test\Sphincs256Test.java" />
+    <Content Include="src\pqc\crypto\test\XMSSMTPrivateKeyTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSMTPublicKeyTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSMTSignatureTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSMTTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSOidTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSPrivateKeyTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSPublicKeyTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSReducedSignatureTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSSignatureTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSTest.java" />
+    <Content Include="src\pqc\crypto\test\XMSSUtilTest.java" />
+    <Compile Include="src\pqc\math\ntru\euclid\test\BigIntEuclideanTest.cs" />
+    <Compile Include="src\pqc\math\ntru\euclid\test\IntEuclideanTest.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\BigDecimalPolynomialTest.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\BigIntPolynomialTest.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\IntegerPolynomialTest.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\LongPolynomial2Test.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\LongPolynomial5Test.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\PolynomialGenerator.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\ProductFormPolynomialTest.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\test\SparseTernaryPolynomialTest.cs" />
+    <Compile Include="src\pqc\math\ntru\util\test\ArrayEncoderTest.cs" />
+  </ItemGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit3TestAdapter.3.17.0\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\..\packages\NUnit.3.13.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit.3.13.1\build\NUnit.props'))" />
+  </Target>
 </Project>

@@ -249,11 +249,6 @@ namespace Org.BouncyCastle.Tests
             "c601cf88725411f119965b9cd38d6c313b91128ed7c98c7604cc62d9b210be79",
             "IDEA/CFB8/NoPadding",
             "dd7839d2525420d10f95eec23dbaf3463302c445972a28c563c2635191bc19af",
-            // TODO Check that PGPCFB modes are obsolete for C# build
-//			"IDEA/PGPCFB/NoPadding",
-//			"dd447da3cbdcf81fcbe4661dcbed88aed899f87585118384bd0565067fa6c13a",
-//			"IDEA/PGPCFBwithIv/NoPadding",
-//			"ed5adbac0e730cc0f00df7e4f6fef672ab042673106435faf3ecf3996a72a0e127b440ba9e5313501de3",
             "Twofish/ECB/TBCPadding",
             "70336d9c9718a8a2ced1b19deed973a3c58af7ea71a69e7efc4df082dca581c019d7daa58d02b89aab6e8c0d17202439",
             "RC2/ECB/TBCPadding",
@@ -300,8 +295,6 @@ namespace Org.BouncyCastle.Tests
             "13c2b1fec2bda74f5ccc8ca31b36a2e91ee024a215387219808640b2fc7a6a41e017aacee3ed893a",
             "Tnepres/EAX/NoPadding",
             "8d5ac312ca0d436a0154d56568d39811ccf6bb970012398014fc8a49ed669b117443c0249b07ead8",
-            //"SM4/EAX/NoPadding",
-            //"e072a95da8e529b41199859482142b3fdfa6b7af27348e5ebf35445a099583dae882affde90ea4a4",
             "Twofish/EAX/NoPadding",
             "9a90dffe1233a04733fc8869e8ec4cba2fa53d9543f0206825293b1ff102e63f81a60b12204e1fd8",
             "IDEA/OFB/NoPadding",
@@ -316,8 +309,6 @@ namespace Org.BouncyCastle.Tests
             "da684e8cab782d4ebae835726f43c3aeea97ee270897255714d464e981ac39af06c9483153f8a05a",
             "SEED/GCM/NoPadding",
             "ed5f6293c9a4f280af6695750bfb3bb3b60c214565a049494df955152757812ebfb93705895606c4378498a93f2541b5",
-            //"SM4/GCM/NoPadding",
-            //"323b601a951da693f87e53c6832380719b4d4bd306c94248202b7e337c81e2d9de0044b77a4c556f15f6fd19f828236b",
             "DES/ECB/TBCPadding",
             "466da00648ef0e1f9617b1f002e225251a3248d09172f46b9617b1f002e22525698575eb3998481b",
             "GOST28147/ECB/TBCPadding",
@@ -358,10 +349,6 @@ namespace Org.BouncyCastle.Tests
             "a51facdb3933c9676795cd38cc3146fd9a399c77606abf994694722b468b1a97",
             "SEED/CTS/NoPadding",
             "d5f76ee015b691a6524d7ad5464422d7fc34f03ddf4d2a4d9934addc82011af1",
-            //"SHACAL-2/CBC/PKCS7Padding",
-            //"3af7c54ea55d2497162ac9c79d9b2f7837898f83aa4b50b7b762979aa8087669b6a81cdec475ed4d2394d7ad771404a52eb52d245a39f0d7d3e8062d3b0f0e54",
-            //"SHACAL-2/CBC/TBCPadding",
-            //"3af7c54ea55d2497162ac9c79d9b2f7837898f83aa4b50b7b762979aa80876693f17fbe9a5baa88ed21b2e1a863dc449061f40cafadfc3cf73486208f87b9352",
         };
 
         private static readonly string[] cipherTests2 =
@@ -378,12 +365,7 @@ namespace Org.BouncyCastle.Tests
 
         private static readonly byte[] input1 = Hex.Decode("000102030405060708090a0b0c0d0e0fff0102030405060708090a0b0c0d0e0f");
         private static readonly byte[] input2 = Hex.Decode("000102030405060708090a0b0c0d0e0fff0102030405060708090a0b0c");
-
-//		static RC2ParameterSpec rc2Spec = new RC2ParameterSpec(128, Hex.decode("0123456789abcdef"));
         private static readonly byte[] rc2IV = Hex.Decode("0123456789abcdef");
-
-//		static RC5ParameterSpec rc5Spec = new RC5ParameterSpec(16, 16, 32, Hex.decode("0123456789abcdef"));
-//		static RC5ParameterSpec rc564Spec = new RC5ParameterSpec(16, 16, 64, Hex.decode("0123456789abcdef0123456789abcdef"));
         private static readonly byte[] rc5IV = Hex.Decode("0123456789abcdef");
         private static readonly byte[] rc564IV = Hex.Decode("0123456789abcdef0123456789abcdef");
         private const int rc5Rounds = 16;
@@ -473,15 +455,6 @@ namespace Org.BouncyCastle.Tests
             try
             {
                 keyGen = GeneratorUtilities.GetKeyGenerator(baseAlgorithm);
-
-                // TODO Add Algorithm property to CipherKeyGenerator?
-//				if (!keyGen.getAlgorithm().Equals(baseAlgorithm))
-//				{
-//					Fail("wrong key generator returned!");
-//				}
-
-                // TODO Add new Init method to CipherKeyGenerator?
-//				keyGen.Init(rand);
                 keyGen.Init(new KeyGenerationParameters(rand, keyGen.DefaultStrength));
 
                 byte[] keyBytes = keyGen.GenerateKey();
@@ -831,35 +804,6 @@ namespace Org.BouncyCastle.Tests
                 Fail("unexpected exception.", e);
             }
 
-//			try
-//			{
-////				byte[] rawDESKey = { -128, -125, -123, -122, -119, -118, -117, -115, -114 };
-//				byte[] rawDESKey = { 128, 131, 133, 134, 137, 138, 139, 141, 142 };
-//
-////				SecretKeySpec cipherKey = new SecretKeySpec(rawDESKey, "DES");
-//				KeyParameter cipherKey = new DesParameters(rawDESKey);
-//
-//				IBufferedCipher cipher = CipherUtilities.GetCipher("DES/ECB/NoPadding");
-//				try
-//				{
-//					// According specification engineInit(int opmode, Key key,
-//					// SecureRandom random) throws InvalidKeyException if the given
-//					// key is inappropriate for initializing this cipher
-//					cipher.Init(true, cipherKey);
-//	                
-//					Fail("failed exception test - no InvalidKeyException thrown");
-//				}
-//				catch (InvalidKeyException)
-//				{
-//					// ignore
-//				}
-//			}
-//			catch (Exception e)
-//			{
-//				Fail("unexpected exception.", e);
-//			}
-
-
             try
             {
                 byte[] rawDESKey = { (byte)128, (byte)131, (byte)133, (byte)134,
@@ -897,49 +841,6 @@ namespace Org.BouncyCastle.Tests
                 Fail("unexpected exception.", e);
             }
 
-            // TODO Put back in
-//			try
-//			{
-//				KeyGenerator keyGen = KeyGenerator.getInstance("DES");
-//
-//				keyGen.init((SecureRandom)null);
-//
-//				// According specification engineGenerateKey() doesn't throw any exceptions.
-//
-//				SecretKey key = keyGen.generateKey();
-//				if (key == null)
-//				{
-//					Fail("key is null!");
-//				}
-//			}
-//			catch (Exception e)
-//			{
-//				Fail("unexpected exception.", e);
-//			}
-//
-//			try
-//			{
-//				AlgorithmParameters algParams = AlgorithmParameters.getInstance("DES");
-//	            
-//				algParams.init(new IvParameterSpec(new byte[8]));
-//
-//				// According specification engineGetEncoded() returns
-//				// the parameters in their primary encoding format. The primary
-//				// encoding
-//				// format for parameters is ASN.1, if an ASN.1 specification for
-//				// this type
-//				// of parameters exists.
-//				byte[] iv = algParams.getEncoded();
-//	            
-//				if (iv.Length!= 10)
-//				{
-//					Fail("parameters encoding wrong length - "  + iv.Length);
-//				}
-//			}
-//			catch (Exception e)
-//			{
-//				Fail("unexpected exception.", e);
-//			}
 
             try
             {
@@ -966,71 +867,6 @@ namespace Org.BouncyCastle.Tests
                     // okay
                 }
 
-//				try
-//				{
-//					IBufferedCipher c = CipherUtilities.GetCipher("DES");
-//
-//					Key k = new PublicKey()
-//					{
-//
-//						public string getAlgorithm()
-//						{
-//							return "STUB";
-//						}
-//
-//						public string getFormat()
-//						{
-//							return null;
-//						}
-//
-//						public byte[] getEncoded()
-//						{
-//							return null;
-//						}
-//	                    
-//					};
-//	    
-//					c.Init(true, k);
-//	    
-//					Fail("failed exception test - no InvalidKeyException thrown for public key");
-//				}
-//				catch (InvalidKeyException e)
-//				{
-//					// okay
-//				}
-//	            
-//				try
-//				{
-//					IBufferedCipher c = CipherUtilities.GetCipher("DES");
-//	    
-//					Key k = new PrivateKey()
-//					{
-//
-//						public string getAlgorithm()
-//						{
-//							return "STUB";
-//						}
-//
-//						public string getFormat()
-//						{
-//							return null;
-//						}
-//
-//						public byte[] getEncoded()
-//						{
-//							return null;
-//						}
-//	                    
-//					};
-//	    
-//					c.Init(false, k);
-//	    
-//					Fail("failed exception test - no InvalidKeyException thrown for private key");
-//				}
-//				catch (InvalidKeyException e)
-//				{
-//					// okay
-//				}
             }
             catch (Exception e)
             {

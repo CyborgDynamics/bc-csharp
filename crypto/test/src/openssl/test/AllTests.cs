@@ -41,7 +41,7 @@ namespace Org.BouncyCastle.OpenSsl.Tests
             Suite.Run(new NullListener(), NUnit.Core.TestFilter.Empty);
         }
 
-        [Suite]
+        //[Suite]
         public static TestSuite Suite
         {
             get

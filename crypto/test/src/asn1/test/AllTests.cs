@@ -13,7 +13,7 @@ namespace Org.BouncyCastle.Asn1.Tests
             Suite.Run(new NullListener(), NUnit.Core.TestFilter.Empty);
         }
 
-        [Suite]
+        //[Suite]
 		public static TestSuite Suite
         {
             get

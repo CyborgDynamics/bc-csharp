@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == 'Any CPU' ">AnyCPU</Platform>
@@ -10,7 +10,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Org.BouncyCastle</RootNamespace>
     <AssemblyName>BouncyCastle</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -33,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <NoWarn>1591</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -41,6 +44,7 @@
     <AssemblyOriginatorKeyFile>..\BouncyCastle.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -663,6 +667,7 @@
     <Compile Include="src\crypto\Check.cs" />
     <Compile Include="src\crypto\CipherKeyGenerator.cs" />
     <Compile Include="src\crypto\CryptoException.cs" />
+    <Compile Include="src\crypto\CryptoServicesRegistrar.cs" />
     <Compile Include="src\crypto\DataLengthException.cs" />
     <Compile Include="src\crypto\digests\NonMemoableDigest.cs" />
     <Compile Include="src\crypto\engines\SerpentEngineBase.cs" />
@@ -1515,6 +1520,11 @@
     <Compile Include="src\pkix\Rfc3280CertPathUtilities.cs" />
     <Compile Include="src\pkix\Rfc3281CertPathUtilities.cs" />
     <Compile Include="src\pkix\TrustAnchor.cs" />
+    <Compile Include="src\pqc\crypto\ntru\BitString.cs" />
+    <Compile Include="src\pqc\crypto\ntru\IndexGenerator.cs" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUEncryptionKeyGenerationParameters.cs" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUEncryptionParameters.cs" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUParameters.cs" />
     <Compile Include="src\security\AgreementUtilities.cs" />
     <Compile Include="src\security\CipherUtilities.cs" />
     <Compile Include="src\security\DigestUtilities.cs" />
@@ -1666,8 +1676,259 @@
   <ItemGroup>
     <None Include="Contributors.html" />
     <None Include="License.html" />
+    <None Include="packages.config" />
     <None Include="Readme.html" />
     <None Include="checklist.txt" />
+    <None Include="src\pqc\asn1\GMSSPrivateKey.cs.undone" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\pqc\asn1\GMSSPublicKey.java" />
+    <Content Include="src\pqc\asn1\McElieceCCA2PrivateKey.java" />
+    <Content Include="src\pqc\asn1\McElieceCCA2PublicKey.java" />
+    <Content Include="src\pqc\asn1\McEliecePrivateKey.java" />
+    <Content Include="src\pqc\asn1\McEliecePublicKey.java" />
+    <Content Include="src\pqc\asn1\ParSet.java" />
+    <Content Include="src\pqc\asn1\PQCObjectIdentifiers.java" />
+    <Content Include="src\pqc\asn1\RainbowPrivateKey.java" />
+    <Content Include="src\pqc\asn1\RainbowPublicKey.java" />
+    <Content Include="src\pqc\asn1\SPHINCS256KeyParams.java" />
+    <Content Include="src\pqc\asn1\XMSSKeyParams.java" />
+    <Content Include="src\pqc\asn1\XMSSMTKeyParams.java" />
+    <Content Include="src\pqc\asn1\XMSSMTPrivateKey.java" />
+    <Content Include="src\pqc\asn1\XMSSMTPublicKey.java" />
+    <Content Include="src\pqc\asn1\XMSSPrivateKey.java" />
+    <Content Include="src\pqc\asn1\XMSSPublicKey.java" />
+    <Content Include="src\pqc\crypto\DigestingMessageSigner.java" />
+    <Content Include="src\pqc\crypto\DigestingStateAwareMessageSigner.java" />
+    <Content Include="src\pqc\crypto\ExchangePair.java" />
+    <Content Include="src\pqc\crypto\ExchangePairGenerator.java" />
+    <Content Include="src\pqc\crypto\ExhaustedPrivateKeyException.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSDigestProvider.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSKeyParameters.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSLeaf.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSParameters.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSRootCalc.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSRootSig.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSSigner.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSStateAwareSigner.java" />
+    <Content Include="src\pqc\crypto\gmss\GMSSUtils.java" />
+    <Content Include="src\pqc\crypto\gmss\Treehash.java" />
+    <Content Include="src\pqc\crypto\gmss\util\GMSSRandom.java" />
+    <Content Include="src\pqc\crypto\gmss\util\GMSSUtil.java" />
+    <Content Include="src\pqc\crypto\gmss\util\WinternitzOTSignature.java" />
+    <Content Include="src\pqc\crypto\gmss\util\WinternitzOTSVerify.java" />
+    <Content Include="src\pqc\crypto\lms\Composer.java" />
+    <Content Include="src\pqc\crypto\lms\DigestUtil.java" />
+    <Content Include="src\pqc\crypto\lms\HSS.java" />
+    <Content Include="src\pqc\crypto\lms\HSSKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\lms\HSSKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\lms\HSSPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\lms\HSSPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\lms\HSSSignature.java" />
+    <Content Include="src\pqc\crypto\lms\HSSSigner.java" />
+    <Content Include="src\pqc\crypto\lms\LMOtsParameters.java" />
+    <Content Include="src\pqc\crypto\lms\LMOtsPrivateKey.java" />
+    <Content Include="src\pqc\crypto\lms\LMOtsPublicKey.java" />
+    <Content Include="src\pqc\crypto\lms\LMOtsSignature.java" />
+    <Content Include="src\pqc\crypto\lms\LMS.java" />
+    <Content Include="src\pqc\crypto\lms\LMSContext.java" />
+    <Content Include="src\pqc\crypto\lms\LMSContextBasedSigner.java" />
+    <Content Include="src\pqc\crypto\lms\LMSContextBasedVerifier.java" />
+    <Content Include="src\pqc\crypto\lms\LMSException.java" />
+    <Content Include="src\pqc\crypto\lms\LMSigParameters.java" />
+    <Content Include="src\pqc\crypto\lms\LMSKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\lms\LMSKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\lms\LMSKeyParameters.java" />
+    <Content Include="src\pqc\crypto\lms\LMSParameters.java" />
+    <Content Include="src\pqc\crypto\lms\LMSPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\lms\LMSPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\lms\LMSSignature.java" />
+    <Content Include="src\pqc\crypto\lms\LMSSignedPubKey.java" />
+    <Content Include="src\pqc\crypto\lms\LMSSigner.java" />
+    <Content Include="src\pqc\crypto\lms\LmsUtils.java" />
+    <Content Include="src\pqc\crypto\lms\LM_OTS.java" />
+    <Content Include="src\pqc\crypto\lms\SeedDerive.java" />
+    <Content Include="src\pqc\crypto\mceliece\Conversions.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCCA2KeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCCA2KeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCCA2KeyParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCCA2Parameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCCA2Primitives.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCCA2PrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCCA2PublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceCipher.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceFujisakiCipher.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceKeyParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceKobaraImaiCipher.java" />
+    <Content Include="src\pqc\crypto\mceliece\McElieceParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McEliecePointchevalCipher.java" />
+    <Content Include="src\pqc\crypto\mceliece\McEliecePrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\McEliecePublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\mceliece\Utils.java" />
+    <Content Include="src\pqc\crypto\MessageEncryptor.java" />
+    <Content Include="src\pqc\crypto\MessageSigner.java" />
+    <Content Include="src\pqc\crypto\newhope\ChaCha20.java" />
+    <Content Include="src\pqc\crypto\newhope\ErrorCorrection.java" />
+    <Content Include="src\pqc\crypto\newhope\NewHope.java" />
+    <Content Include="src\pqc\crypto\newhope\NHAgreement.java" />
+    <Content Include="src\pqc\crypto\newhope\NHExchangePairGenerator.java" />
+    <Content Include="src\pqc\crypto\newhope\NHKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\newhope\NHOtherInfoGenerator.java" />
+    <Content Include="src\pqc\crypto\newhope\NHPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\newhope\NHPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\newhope\NHSecretKeyProcessor.java" />
+    <Content Include="src\pqc\crypto\newhope\NTT.java" />
+    <Content Include="src\pqc\crypto\newhope\Params.java" />
+    <Content Include="src\pqc\crypto\newhope\Poly.java" />
+    <Content Include="src\pqc\crypto\newhope\Precomp.java" />
+    <Content Include="src\pqc\crypto\newhope\Reduce.java" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUEncryptionKeyPairGenerator.cs" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUEncryptionKeyParameters.cs" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUEncryptionPrivateKeyParameters.cs" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUEncryptionPublicKeyParameters.cs" />
+    <Content Include="src\pqc\crypto\ntru\NTRUEngine.java" />
+    <Content Include="src\pqc\crypto\ntru\NTRUSigner.java" />
+    <Content Include="src\pqc\crypto\ntru\NTRUSignerPrng.java" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUSigningKeyGenerationParameters.cs" />
+    <Content Include="src\pqc\crypto\ntru\NTRUSigningKeyPairGenerator.java" />
+    <Compile Include="src\pqc\crypto\ntru\NTRUSigningParameters.cs" />
+    <Content Include="src\pqc\crypto\ntru\NTRUSigningPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\ntru\NTRUSigningPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\qtesla\HashUtils.java" />
+    <Content Include="src\pqc\crypto\qtesla\IntSlicer.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTesla1p.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTesla3p.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTESLAKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTESLAKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTESLAPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTESLAPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTESLASecurityCategory.java" />
+    <Content Include="src\pqc\crypto\qtesla\QTESLASigner.java" />
+    <Content Include="src\pqc\crypto\rainbow\Layer.java" />
+    <Content Include="src\pqc\crypto\rainbow\RainbowKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\rainbow\RainbowKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\rainbow\RainbowKeyParameters.java" />
+    <Content Include="src\pqc\crypto\rainbow\RainbowParameters.java" />
+    <Content Include="src\pqc\crypto\rainbow\RainbowPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\rainbow\RainbowPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\rainbow\RainbowSigner.java" />
+    <Content Include="src\pqc\crypto\rainbow\util\ComputeInField.java" />
+    <Content Include="src\pqc\crypto\rainbow\util\GF2Field.java" />
+    <Content Include="src\pqc\crypto\rainbow\util\RainbowUtil.java" />
+    <Content Include="src\pqc\crypto\sphincs\HashFunctions.java" />
+    <Content Include="src\pqc\crypto\sphincs\Horst.java" />
+    <Content Include="src\pqc\crypto\sphincs\Permute.java" />
+    <Content Include="src\pqc\crypto\sphincs\Seed.java" />
+    <Content Include="src\pqc\crypto\sphincs\SPHINCS256Config.java" />
+    <Content Include="src\pqc\crypto\sphincs\SPHINCS256KeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\sphincs\SPHINCS256KeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\sphincs\SPHINCS256Signer.java" />
+    <Content Include="src\pqc\crypto\sphincs\SPHINCSKeyParameters.java" />
+    <Content Include="src\pqc\crypto\sphincs\SPHINCSPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\sphincs\SPHINCSPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\sphincs\Tree.java" />
+    <Content Include="src\pqc\crypto\sphincs\Wots.java" />
+    <Content Include="src\pqc\crypto\StateAwareMessageSigner.java" />
+    <Content Include="src\pqc\crypto\util\PrivateKeyFactory.java" />
+    <Content Include="src\pqc\crypto\util\PrivateKeyInfoFactory.java" />
+    <Content Include="src\pqc\crypto\util\PublicKeyFactory.java" />
+    <Content Include="src\pqc\crypto\util\SubjectPublicKeyInfoFactory.java" />
+    <Content Include="src\pqc\crypto\util\Utils.java" />
+    <Content Include="src\pqc\crypto\xmss\BDS.java" />
+    <Content Include="src\pqc\crypto\xmss\BDSStateMap.java" />
+    <Content Include="src\pqc\crypto\xmss\BDSTreeHash.java" />
+    <Content Include="src\pqc\crypto\xmss\DefaultXMSSMTOid.java" />
+    <Content Include="src\pqc\crypto\xmss\DefaultXMSSOid.java" />
+    <Content Include="src\pqc\crypto\xmss\DigestUtil.java" />
+    <Content Include="src\pqc\crypto\xmss\HashTreeAddress.java" />
+    <Content Include="src\pqc\crypto\xmss\KeyedHashFunctions.java" />
+    <Content Include="src\pqc\crypto\xmss\LTreeAddress.java" />
+    <Content Include="src\pqc\crypto\xmss\OTSHashAddress.java" />
+    <Content Include="src\pqc\crypto\xmss\WOTSPlus.java" />
+    <Content Include="src\pqc\crypto\xmss\WOTSPlusOid.java" />
+    <Content Include="src\pqc\crypto\xmss\WOTSPlusParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\WOTSPlusPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\WOTSPlusPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\WOTSPlusSignature.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSS.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSAddress.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMT.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTKeyGenerationParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTKeyPairGenerator.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTSignature.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSMTSigner.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSNode.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSNodeUtil.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSOid.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSPrivateKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSPublicKeyParameters.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSReducedSignature.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSSignature.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSSigner.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSStoreableObjectInterface.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSUtil.java" />
+    <Content Include="src\pqc\crypto\xmss\XMSSVerifierUtil.java" />
+    <Content Include="src\pqc\math\linearalgebra\BigEndianConversions.java" />
+    <Content Include="src\pqc\math\linearalgebra\BigIntUtils.java" />
+    <Content Include="src\pqc\math\linearalgebra\ByteUtils.java" />
+    <Content Include="src\pqc\math\linearalgebra\CharUtils.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2Matrix.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2mField.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2mMatrix.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2mVector.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2nElement.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2nField.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2nONBElement.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2nONBField.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2nPolynomial.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2nPolynomialElement.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2nPolynomialField.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2Polynomial.java" />
+    <Content Include="src\pqc\math\linearalgebra\GF2Vector.java" />
+    <Content Include="src\pqc\math\linearalgebra\GFElement.java" />
+    <Content Include="src\pqc\math\linearalgebra\GoppaCode.java" />
+    <Content Include="src\pqc\math\linearalgebra\IntegerFunctions.java" />
+    <Content Include="src\pqc\math\linearalgebra\IntUtils.java" />
+    <Content Include="src\pqc\math\linearalgebra\LittleEndianConversions.java" />
+    <Content Include="src\pqc\math\linearalgebra\Matrix.java" />
+    <Content Include="src\pqc\math\linearalgebra\Permutation.java" />
+    <Content Include="src\pqc\math\linearalgebra\PolynomialGF2mSmallM.java" />
+    <Content Include="src\pqc\math\linearalgebra\PolynomialRingGF2.java" />
+    <Content Include="src\pqc\math\linearalgebra\PolynomialRingGF2m.java" />
+    <Content Include="src\pqc\math\linearalgebra\RandUtils.java" />
+    <Content Include="src\pqc\math\linearalgebra\Vector.java" />
+    <Compile Include="src\pqc\math\ntru\euclid\BigIntEuclidean.cs" />
+    <Compile Include="src\pqc\math\ntru\euclid\IntEuclidean.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\BigDecimalPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\BigIntPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\Constants.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\DenseTernaryPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\IntegerPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\LongPolynomial2.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\LongPolynomial5.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\ModularResultant.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\IPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\ProductFormPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\Resultant.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\SparseTernaryPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\polynomial\ITernaryPolynomial.cs" />
+    <Compile Include="src\pqc\math\ntru\util\ArrayEncoder.cs" />
+    <Compile Include="src\pqc\math\ntru\util\Util.cs" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1312,7 +1312,7 @@ namespace Org.BouncyCastle.Math
                 return One;
 
             if (this.sign < 0)
-                return new BigInteger(-1, doSubBigLil(this.magnitude, One.magnitude), true);
+                return new BigInteger(-1, DoSubBigLil(this.magnitude, One.magnitude), true);
 
             return AddToMagnitude(One.magnitude);
         }
@@ -2483,7 +2483,7 @@ namespace Org.BouncyCastle.Math
             if (val == this)
                 return Square();
 
-            if ((sign & val.sign) == 0)
+            if ((sign == 0 && val == null) || (sign & val.sign) == 0)
                 return Zero;
 
             if (val.QuickPow2Check()) // val is power of two
@@ -3088,10 +3088,10 @@ namespace Org.BouncyCastle.Math
                 lilun = n;
             }
 
-            return new BigInteger(this.sign * compare, doSubBigLil(bigun.magnitude, lilun.magnitude), true);
+            return new BigInteger(this.sign * compare, DoSubBigLil(bigun.magnitude, lilun.magnitude), true);
         }
 
-        private static int[] doSubBigLil(
+        private static int[] DoSubBigLil(
             int[]	bigMag,
             int[]	lilMag)
         {

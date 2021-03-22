@@ -382,7 +382,7 @@ namespace Org.BouncyCastle.Crypto.Tls
             if (x == 0)
                 return 32;
 
-            uint ux = (uint)x;
+            int ux = x;
             int n = 0;
             while ((ux & 1U) == 0)
             {

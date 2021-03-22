@@ -246,10 +246,38 @@ namespace Org.BouncyCastle.Security
         {
             byte[] bytes = new byte[4];
             NextBytes(bytes);
-            return (int)Pack.BE_To_UInt32(bytes);
+
+			// TODO: FRAMEWORK ISSUE
+			// Per Java protocol, NextInt should always be >=0. Converting from UINT
+			// To INT allows for the value to be negative with unsigned bytes (byte)
+			// We should either switch to sbyte or call abs. 
+			//
+			// IMPORTANT: If we're using this for +/- here then we need to put it in BOLD.
+            return System.Math.Abs((int)Pack.BE_To_UInt32(bytes));
         }
 
-        public virtual long NextLong()
+		public virtual int NextInt(int bound)
+		{
+			if (bound <= 0)
+			{
+				throw new InvalidParameterException("bound must be positive");
+			}
+
+			if ((bound & -bound) == bound)  // i.e., bound is a power of 2
+			{
+				return (int)((bound * (long)Next(31)) >> 31);
+			}
+
+			int bits, val;
+			do
+			{
+				bits = Next(31);
+				val = bits % bound;
+			} while (bits - val + (bound - 1) < 0);
+			return val;
+		}
+
+		public virtual long NextLong()
         {
             byte[] bytes = new byte[8];
             NextBytes(bytes);
